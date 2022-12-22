@@ -1,0 +1,29 @@
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}
+
+.animate {
+  animation-duration: 1s;
+  animation-name: slidein;
+}
+
+.offer__inner{
+  display: flex;
+  transition: all .6s;
+}
+
+.offer__slider-wrapper{
+  overflow: hidden;
+}
+@keyframes slidein {
+  from {
+    opacity: 0.01;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
