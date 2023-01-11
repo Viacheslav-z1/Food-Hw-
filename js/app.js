@@ -1,30 +1,29 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const tabContent = document.querySelectorAll('.tabcontent'),
-    tabsBtn = document.querySelector('.tabheader__items'),
-    tabsItem = document.querySelectorAll('.tabheader__item');
-
+window.addEventListener("DOMContentLoaded", () => {
+  const tabContent = document.querySelectorAll(".tabcontent"),
+    tabsBtn = document.querySelector(".tabheader__items"),
+    tabsItem = document.querySelectorAll(".tabheader__item");
 
   function showTabsContent(i = 0) {
-    tabContent[i].classList.add('show', 'animate');
-    tabsItem[i].classList.add('tabheader__item_active');
+    tabContent[i].classList.add("show", "animate");
+    tabsItem[i].classList.add("tabheader__item_active");
   }
 
   function hideTabsContent() {
-    tabContent.forEach(item => {
-      item.classList.add('hide', 'animate');
-      item.classList.remove('show');
+    tabContent.forEach((item) => {
+      item.classList.add("hide", "animate");
+      item.classList.remove("show");
     });
 
-    tabsItem.forEach(item => {
-      item.classList.remove('tabheader__item_active');
+    tabsItem.forEach((item) => {
+      item.classList.remove("tabheader__item_active");
     });
   }
   hideTabsContent();
   showTabsContent();
 
-  tabsBtn.addEventListener('click', (event) => {
+  tabsBtn.addEventListener("click", (event) => {
     const target = event.target;
-    if (target && target.classList.contains('tabheader__item')) {
+    if (target && target.classList.contains("tabheader__item")) {
       tabsItem.forEach((element, i) => {
         if (element == target) {
           hideTabsContent();
@@ -34,24 +33,22 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-
   ///timer
 
-  const deadline = '2023-01-01';
-
+  const deadline = "2024-01-01";
 
   function getTimeRemeaning(endTime) {
     const t = Date.parse(endTime) - Date.parse(new Date()),
-      days = Math.floor((t / (1000 * 60 * 60 * 24))),
-      hours = Math.floor((t / (1000 * 60 * 60) % 24)),
-      minuts = Math.floor(((t / 1000 / 60) % 60)),
+      days = Math.floor(t / (1000 * 60 * 60 * 24)),
+      hours = Math.floor((t / (1000 * 60 * 60)) % 24),
+      minuts = Math.floor((t / 1000 / 60) % 60),
       seconds = Math.floor((t / 1000) % 60);
     return {
-      'total': t,
-      'days': days,
-      'hours': hours,
-      'minuts': minuts,
-      'seconds': seconds
+      total: t,
+      days: days,
+      hours: hours,
+      minuts: minuts,
+      seconds: seconds,
     };
   }
 
@@ -59,7 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (num > 0 && num < 10) {
       num = `0${num}`;
     } else if (num == 0) {
-      num = `00`
+      num = `00`;
     } else {
       num = num;
     }
@@ -92,54 +89,55 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-  setClock('.timer', deadline);
-
+  setClock(".timer", deadline);
 
   //Modal
 
-  const btns = document.querySelectorAll('[data-modal]'),
-    modal = document.querySelector('.modal'),
-    modalClose = document.querySelector('[data-close]'),
-    body = document.querySelector('body');
+  const btns = document.querySelectorAll("[data-modal]"),
+    modal = document.querySelector(".modal"),
+    modalClose = document.querySelector("[data-close]"),
+    body = document.querySelector("body");
 
   function showModal() {
-    modal.classList.add('show');
-    body.style.overflow = 'hidden';
+    modal.classList.add("show");
+    body.style.overflow = "hidden";
     clearInterval(timout);
   }
 
   function closeModal() {
-    modal.classList.remove('show');
-    modal.classList.add('hide');
-    body.style.overflow = '';
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+    body.style.overflow = "";
   }
 
-  btns.forEach(item => {
-    item.addEventListener('click', showModal);
+  btns.forEach((item) => {
+    item.addEventListener("click", showModal);
   });
 
-  modal.addEventListener('click', function (e) {
+  modal.addEventListener("click", function (e) {
     const target = e.target;
     if (target === modal) {
       closeModal();
     }
   });
 
-  modalClose.addEventListener('click', closeModal);
+  modalClose.addEventListener("click", closeModal);
 
   const timout = setTimeout(showModal, 6000);
 
   function showModalByScroll() {
-    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
+    if (
+      window.pageYOffset + document.documentElement.clientHeight >=
+      document.documentElement.scrollHeight - 1
+    ) {
       showModal();
-      window.removeEventListener('scroll', showModalByScroll);
+      window.removeEventListener("scroll", showModalByScroll);
     }
   }
 
-  window.addEventListener('scroll', showModalByScroll);
+  window.addEventListener("scroll", showModalByScroll);
 
   /// Usage Class
-
 
   class MenuItem {
     constructor(src, alt, title, descr, price, parentSelector, ...clases) {
@@ -159,11 +157,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     render() {
-      const element = document.createElement('div');
-      if (this.clases.length === 0 || !this.clases.includes('menu__item')) {
-        element.classList.add('menu__item');
+      const element = document.createElement("div");
+      if (this.clases.length === 0 || !this.clases.includes("menu__item")) {
+        element.classList.add("menu__item");
       } else {
-        this.clases.forEach(className => {
+        this.clases.forEach((className) => {
           element.classList.add(className);
         });
       }
@@ -184,44 +182,42 @@ window.addEventListener('DOMContentLoaded', () => {
 
   new MenuItem(
     "img/tabs/vegy.jpg",
-    'vegy',
+    "vegy",
     'Меню "Фитнес"',
     'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов.Продукт активных и здоровых людей.Это абсолютно новый продукт с оптимальной ценой и высоким',
     23,
-    '.menu .container',
-    'menu__item',
-    'adas'
+    ".menu .container",
+    "menu__item",
+    "adas"
   ).render();
 
   new MenuItem(
     "img/tabs/elite.jpg",
-    'vegy',
-    'Меню “Премиум”',
+    "vegy",
+    "Меню “Премиум”",
     'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов.Продукт активных и здоровых людей.Это абсолютно новый продукт с оптимальной ценой и высоким',
     20,
-    '.menu .container'
+    ".menu .container"
   ).render();
 
   new MenuItem(
     "img/tabs/vegy.jpg",
-    'vegy',
+    "vegy",
     'Меню "Фитнес"',
     'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов.Продукт активных и здоровых людей.Это абсолютно новый продукт с оптимальной ценой и высоким',
     22,
-    '.menu .container'
+    ".menu .container"
   ).render();
-
-
 
   //slider
 
-  const sliderPrev = document.querySelector('.offer__slider-prev'),
-    sliderNext = document.querySelector('.offer__slider-next'),
-    slides = document.querySelectorAll('.offer__slide'),
-    slidesInner = document.querySelector('.offer__inner'),
+  const sliderPrev = document.querySelector(".offer__slider-prev"),
+    sliderNext = document.querySelector(".offer__slider-next"),
+    slides = document.querySelectorAll(".offer__slide"),
+    slidesInner = document.querySelector(".offer__inner"),
     width = window.getComputedStyle(slidesInner).width;
-  let activeSlidecurrent = document.querySelector('#current');
-  let totalSlides = document.querySelector('#total');
+  let activeSlidecurrent = document.querySelector("#current");
+  let totalSlides = document.querySelector("#total");
   let activeSlideIndex = 1;
   let offset = 0;
 
@@ -232,22 +228,22 @@ window.addEventListener('DOMContentLoaded', () => {
       activeSlidecurrent.innerHTML = activeSlideIndex;
     }
 
-    if (slides.length < 10){
+    if (slides.length < 10) {
       totalSlides.innerHTML = `0${slides.length}`;
-    } else{
-      totalSlides.innerHTML = slides.length
-    };
-  }
+    } else {
+      totalSlides.innerHTML = slides.length;
+    }
+  };
 
-  slidesInner.style.width = 100 * slides.length + '%';
+  slidesInner.style.width = 100 * slides.length + "%";
 
-  slides.forEach(slide => {
+  slides.forEach((slide) => {
     slide.style.width = width;
   });
 
   updateIndex();
 
-  const slideNext = ()=>{
+  const slideNext = () => {
     if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
       offset = 0;
     } else {
@@ -255,41 +251,31 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     activeSlideIndex = offset / +width.slice(0, width.length - 2) + 1;
     updateIndex();
-    slidesInner.style.transform = `translateX(-${offset}px)`
-  }  
+    slidesInner.style.transform = `translateX(-${offset}px)`;
+  };
 
   const slidePrev = () => {
     if (offset == 0) {
-      offset = +width.slice(0, width.length - 2) * (slides.length - 1)
+      offset = +width.slice(0, width.length - 2) * (slides.length - 1);
     } else {
       offset -= +width.slice(0, width.length - 2);
     }
     activeSlideIndex = offset / +width.slice(0, width.length - 2) + 1;
     slidesInner.style.transform = `translateX(-${offset}px)`;
     updateIndex();
-  }  
-  
- 
-  sliderNext.addEventListener('click', () => slideNext());
-  sliderPrev.addEventListener('click', () => slidePrev());
+  };
+
+  sliderNext.addEventListener("click", () => slideNext());
+  sliderPrev.addEventListener("click", () => slidePrev());
 
   const autoPlay = setInterval(() => slideNext(), 2500);
 
-  slidesInner.addEventListener('mouseover', ()=> {
-  clearInterval(autoPlay);
-
+  slidesInner.addEventListener("mouseover", () => {
+    clearInterval(autoPlay);
   });
-
-
-
- 
-
-
-
 
   // hideSlides();
   // showSlide(activeSlideIndex);
-
 
   // sliderNext.addEventListener('click', () => {
   //   activeSlideIndex += 1;
@@ -306,8 +292,6 @@ window.addEventListener('DOMContentLoaded', () => {
   //   }
   //   showSlide(activeSlideIndex);
   // });
-
-
 
   // function hideSlides() {
   //   slides.forEach(slide => {
@@ -329,6 +313,123 @@ window.addEventListener('DOMContentLoaded', () => {
   //   }
   // }
 
+  /*Calc*/
+
+  let result = document.querySelector(".calculating__result span");
+
+  let sex = "famale",
+    weight,
+    height,
+    age,
+    activity = 1.375;
+
+  if (localStorage.getItem("sex")) {
+    sex = localStorage.getItem("sex");
+  }else{
+    sex = "famale";
+     localStorage.setItem("sex", "famale");
+  }
+  
+  if (localStorage.getItem("ratio")) {
+    activity = localStorage.getItem("ratio");
+  } else{
+    activity = 1.375;
+    localStorage.setItem("ratio", 1.375);
+  }
 
 
+
+  function initCalc(selector,activeClass) {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach(element => {
+    element.classList.remove(activeClass);
+    if(element.getAttribute('id') === localStorage.getItem('sex')){
+      element.classList.add(activeClass);
+    }
+
+    if(element.getAttribute('data-ratio') === localStorage.getItem('ratio')){
+      element.classList.add(activeClass);
+    }
+  });
+  }
+
+   initCalc("#gender div", "calculating__choose-item_active");
+   initCalc(".calculating__choose_big div", "calculating__choose-item_active");
+
+  function calc() {
+    console.log(sex, weight, height, age, activity);
+    if (!sex || !weight || !height || !age || !activity) {
+      result.innerHTML = "____";
+      return;
+    }
+
+    if (sex === "male") {
+      result.innerHTML = Math.floor(
+        (88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * activity
+      );
+    } else {
+      result.innerHTML = Math.floor(
+        (447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * activity
+      );
+    }
+  }
+  calc();
+
+  function getDinamicInformation(selector) {
+    const input = document.querySelector(selector);
+
+    input.addEventListener("input", () => {
+      if (input.value.match(/\D/g)) {
+        input.style.border = "1px solid red";
+      } else {
+        input.style.border = "none";
+      }
+      switch (input.getAttribute("id")) {
+        case "height":
+          height = +input.value;
+          break;
+        case "weight":
+          weight = +input.value;
+          break;
+        case "age":
+          age = +input.value;
+          break;
+      }
+      calc();
+    });
+  }
+
+  getDinamicInformation("#height");
+  getDinamicInformation("#weight");
+  getDinamicInformation("#age");
+
+  function getStaticInformation(selector, activeClass) {
+    const elements = document.querySelectorAll(`${selector} div`);
+
+    elements.forEach((element) => {
+      element.addEventListener("click", (e) => {
+        if (e.target.getAttribute("data-ratio")) {
+          activity = +e.target.getAttribute("data-ratio");
+          localStorage.setItem("ratio", +e.target.getAttribute("data-ratio"));
+          calc();
+        } else {
+          sex = e.target.getAttribute("id");
+          localStorage.setItem("sex", e.target.getAttribute("id"));
+          calc();
+        }
+
+        elements.forEach((element) => {
+          element.classList.remove(activeClass);
+        });
+
+        e.target.classList.add(activeClass);
+      });
+    });
+  }
+
+  getStaticInformation("#gender", "calculating__choose-item_active");
+  getStaticInformation(
+    ".calculating__choose_big",
+    "calculating__choose-item_active"
+  );
 });
